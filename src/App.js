@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import React from "react";
+import "./App.css";
+import { Home } from "./views/home/Home";
+import { Auth } from "./views/auth/Auth";
+import { Callback } from "./views/callback/Callback";
+import { Route } from "react-router-dom";
+import { GlobalContext } from "./GlobalContext/GlobalContext";
+import { Auth0 } from "./Auth0/Auth0";
 function App() {
+  const auth0 = new Auth0();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div className="routes">
+        <GlobalContext.Provider
+          value={{
+            auth0
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/auth" component={Auth} />
+          <Route exact path="/callback" component={Callback} />
+        </GlobalContext.Provider>
+      </div>
     </div>
   );
 }
